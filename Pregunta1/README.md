@@ -27,6 +27,7 @@ A continuación enlistamos los requisitos para el correcto funcionamiento
 
 ```
 * Nmap
+* Python 2
 * Python 3
 ```
 ## Equipo
