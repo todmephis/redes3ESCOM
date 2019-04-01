@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE nmaprun>
+<?xml-stylesheet href="file:///usr/local/bin/../share/nmap/nmap.xsl" type="text/xsl"?>
+<!-- Nmap 7.70 scan initiated Sun Mar 24 21:35:39 2019 as: nmap -sP -iL subnets.list -oX livehost.list -->
+<nmaprun scanner="nmap" args="nmap -sP -iL subnets.list -oX livehost.list" start="1553484939" startstr="Sun Mar 24 21:35:39 2019" version="7.70" xmloutputversion="1.04">
+<verbose level="0"/>
+<debugging level="0"/>
+<host><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="192.168.200.1" addrtype="ipv4"/>
+<address addr="F4:9E:EF:B4:58:54" addrtype="mac" vendor="Taicang T&amp;W Electronics"/>
+<hostnames>
+</hostnames>
+<times srtt="7261" rttvar="7261" to="100000"/>
+</host>
+<host><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="192.168.200.5" addrtype="ipv4"/>
+<address addr="FC:8F:C4:01:A4:5D" addrtype="mac" vendor="Intelligent Technology"/>
+<hostnames>
+</hostnames>
+<times srtt="1181945" rttvar="1181945" to="5909725"/>
+</host>
+<host><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="192.168.200.6" addrtype="ipv4"/>
+<address addr="E4:A7:C5:50:35:E8" addrtype="mac" vendor="Huawei Technologies"/>
+<hostnames>
+</hostnames>
+<times srtt="170265" rttvar="134687" to="709013"/>
+</host>
+<host><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="192.168.200.8" addrtype="ipv4"/>
+<address addr="4C:74:BF:98:03:EA" addrtype="mac" vendor="Apple"/>
+<hostnames>
+</hostnames>
+<times srtt="7003" rttvar="7003" to="100000"/>
+</host>
+<host><status state="up" reason="localhost-response" reason_ttl="0"/>
+<address addr="192.168.200.39" addrtype="ipv4"/>
+<hostnames>
+</hostnames>
+</host>
+<runstats><finished time="1553484966" timestr="Sun Mar 24 21:36:06 2019" elapsed="26.52" summary="Nmap done at Sun Mar 24 21:36:06 2019; 256 IP addresses (5 hosts up) scanned in 26.52 seconds" exit="success"/><hosts up="5" down="251" total="256"/>
+</runstats>
+</nmaprun>
