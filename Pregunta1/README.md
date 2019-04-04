@@ -39,7 +39,6 @@ A continuación enlistamos los requisitos para el correcto funcionamiento
 **outputs:** Directorio donde se almacenan las salidas de cada script.
 ### DDF
 ![Figura 1. Diagrama de flujo solution.sh](https://github.com/todmephis/redes3ESCOM/blob/master/Pregunta1/images/p1_1.png)  
-```
 ___
 **solution.sh:** Se encarga de integrar la solución, manda a llamar al resto de scripts.   Escrito en bash.  
 Modo de ejecución:  
