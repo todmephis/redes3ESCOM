@@ -20,7 +20,7 @@ echo "[+]Obteniendo subredes"
 $PYTHON2 scripts/obtenersubredes.py $OUT/$SUBNETS
 echo "[*]Listo"
 echo "[+]Nmaping $SUBNETS..."
-sudo $NMAP -v -sP -iL $OUT/$SUBNETS -oX $OUT/$NMAPOUT
+sudo $NMAP -vvv -sP -iL $OUT/$SUBNETS -oX $OUT/$NMAPOUT
 echo "[*]Listo"
 echo "[+]Convirtiendo $OUT/$NMAPOUT a $OUT/network_hosts.html"
 $XSLT $OUT/$NMAPOUT -o $OUT/network_hosts.html
