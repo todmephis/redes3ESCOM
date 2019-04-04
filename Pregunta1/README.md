@@ -74,6 +74,11 @@ Toma como entrada el archivo ***outputs/hostsfound.list*** para hacer un pingpul
 Los archivos message.txt y mycontacts.txt son la plantilla para enviar el correo electrónico.***  
 ___   
 Cada scipt puede ejecutarse de manera independiente si por alguna razón algo falla en el proceso de ejecución automática.  
+
+## TODO  
+- [ ] Fix bugs.
+
+
 ## Equipo
 
 * **Iván Sánchez** @todmephis
