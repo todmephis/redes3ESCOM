@@ -30,7 +30,7 @@ A continuación enlistamos los requisitos para el correcto funcionamiento
 * Python 2
 * Python 3
 * XSLT (opcional)
-* Todo lo contenido en requirements.txt
+* Todo lo contenido en requirements.txt. Instalar con pip3 install -r requirements.txt.
 ```
 ***NOTA: Para enviar notificación a través de telegram es necesario contar con un bot (bot token ID y chat ID).***
 ## Funcionamiento
