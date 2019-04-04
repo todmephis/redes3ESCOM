@@ -76,7 +76,10 @@ ___
 Cada scipt puede ejecutarse de manera independiente si por alguna razón algo falla en el proceso de ejecución automática.  
 
 ## TODO  
-- [ ] Fix bugs.
+### General  
+- [ ] Arreglar bugs.
+- [ ] Agregar validaciones.
+- [ ] Detectar excepciones.
 
 
 ## Equipo
