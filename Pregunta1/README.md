@@ -38,13 +38,17 @@ A continuación enlistamos los requisitos para el correcto funcionamiento
 **scripts:** Este directorio contiene los scripts que hacen toda la magia.  
 **outputs:** Directorio donde se almacenan las salidas de cada script.
 ### DDF
-![Figura 1. Diagrama de flujo solution.sh](https://github.com/todmephis/redes3ESCOM/blob/master/Pregunta1/images/p1_1.png)
+![Figura 1. Diagrama de flujo solution.sh](https://github.com/todmephis/redes3ESCOM/blob/master/Pregunta1/images/p1_1.png)  
+```
 **solution.sh:** Se encarga de integrar la solución, manda a llamar al resto de scripts. Escrito en bash.  
 Modo de ejecución:  
 $chmod +x solution.sh  
 $./solution.sh 
+```
 ***NOTA: Los nombres de las salidas están en este script, los demás scripts los toman desde línea de argumentos.***  
+```  
 **obtenersubredes.py:** 
+```
 
 ## Equipo
 
