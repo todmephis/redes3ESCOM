@@ -10,7 +10,7 @@ def create_database():
 																				  #encrypted or secured for security reasons.
 	cursor = database.cursor()													  
 	cursor._defer_warnings = True
-	for line in open('/tftpboot/snmp_manager/scripts/db'):
+	for line in open('db'):
 		#print('DEBUG:',line) #debug
 		cursor.execute(line)
 	print('DEBUG: Database is up')
@@ -19,8 +19,11 @@ def process_inv_file(router):
 	d = {}
 	dict_list = []
 	data = ['NAME','DESCR','PID','VID','SN']
+	print(router)
+	path='../inventory/'+router+''
+	print(path)
 	try:
-		with open ('/tftpboot/snmp_manager/inventory/'+router+'', 'rt') as file:  
+		with open (path, 'rt') as file:  
 			for line in file:                 
 				#print(line)                     
 				for x in data:
@@ -59,15 +62,16 @@ def process_inv_file(router):
 								d[x]= param
 						if x == 'SN':
 							#dict_list.append(d)
-							print(d)
+							#print(d)
 							Load(d,router)
 					else:
 						pass
 			else:
-				if line < 3:
+				if os.path.getsize(path) < 4000:
 					print('ERROR: Inventory file for router ' +router+ ' not fetched correctly !')		
+					return 0
 		file.close()
-		os.system('mysql --host localhost --user root --password=root -D snmp -e "select * from snmp.inventario;"')
+		#os.system('mysql --host localhost --user root --password=root -D snmp -e "select * from snmp.inventario;"')
 	except:
 		print('ERROR: Inventory file for router ' +router+ ' not found !')
 		return 0
@@ -78,6 +82,7 @@ def Load(args,router):#Loads data into several tables
 	date = now.strftime("%Y-%m-%d %H:%M")
 	database = MySQLdb.connect (host="localhost", user = "root", passwd = "root")																	  																				  
 	cursor = database.cursor()	
+	cursor._defer_warnings = True
 	query = "INSERT INTO snmp.inventario (Router,Nombre,Descripcion,PID,VID,NS,Date_Time)" \
 			"VALUES ( %s, %s, %s, %s, %s, %s, %s)"
 	args = (router,args['NAME'],args['DESCR'],args['PID'],args['VID'],args['SN'],date)

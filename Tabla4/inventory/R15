@@ -1,5 +1,5 @@
-Trying 192.168.1.117...
-Connected to 192.168.1.117.
+Trying 192.168.1.26...
+Connected to 192.168.1.26.
 Escape character is '^]'.
 
 
@@ -7,9 +7,9 @@ User Access Verification
 
 Username: cisco
 Password: 
-R16>enable
+R15>enable
 Password: 
-R16#show inventory raw
+R15#show inventory raw
 NAME: "Chassis", DESCR: "Cisco 7206VXR, 6-slot chassis"
 PID: CISCO7206VXR      , VID:    , SN: 4279256517 
 
@@ -128,4 +128,4 @@ NAME: "Power Supply 2", DESCR: "Cisco 7200 AC Power Supply"
 PID: PWR-7200-AC       , VID:    , SN:            
 
 
-R16#
+R15#
