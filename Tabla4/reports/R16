@@ -1,0 +1,10 @@
+May 13 13:13:23 r16 38: *May 13 13:13:26.275: %LINK-5-CHANGED: Interface Serial1/1, changed state to administratively down
+May 13 13:13:23 r16 39: *May 13 13:13:26.279: %LINK-5-CHANGED: Interface Serial1/2, changed state to administratively down
+May 13 13:13:23 r16 40: *May 13 13:13:26.283: %LINK-5-CHANGED: Interface Serial1/3, changed state to administratively down
+May 13 13:13:23 r16 41: *May 13 13:13:26.287: %LINK-5-CHANGED: Interface Serial2/0, changed state to administratively down
+May 13 13:13:23 r16 42: *May 13 13:13:26.291: %LINK-5-CHANGED: Interface Serial2/1, changed state to administratively down
+May 13 13:13:23 r16 43: *May 13 13:13:26.295: %LINK-5-CHANGED: Interface Serial2/2, changed state to administratively down
+May 13 13:13:24 r16 44: *May 13 13:13:26.295: %LINK-5-CHANGED: Interface Serial2/3, changed state to administratively down
+May 13 13:13:24 r16 44: *May 13 13:13:26.295: %LINK-5-CHANGED: Interface Serial2/3, changed state to administratively down
+May 13 13:27:15 r16 45: *May 13 13:27:17.459: %SYS-5-CONFIG_I: Configured from console by console
+May 13 13:27:15 r16 45: *May 13 13:27:17.459: %SYS-5-CONFIG_I: Configured from console by console

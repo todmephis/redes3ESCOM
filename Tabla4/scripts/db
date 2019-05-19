@@ -1,0 +1,1 @@
+drop database snmp;create database if not exists snmp;use snmp;create table if not exists snmp.inventario(id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,Router VARCHAR(3),Nombre VARCHAR(50),Descripcion VARCHAR(60),PID VARCHAR(30),VID VARCHAR(30),NS VARCHAR(30), Date_Time DATETIME);
