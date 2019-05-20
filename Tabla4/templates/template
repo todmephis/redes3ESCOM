@@ -1,0 +1,75 @@
+!Template for cisco 7200 router
+!
+!
+!
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname %h
+!
+!
+username %u password 0 %lp
+archive
+ log config
+  hidekeys
+!
+!trap configuration
+!
+ip cef
+no ip domain-lookup
+no ip icmp rate-limit unreachable
+ip tcp synwait 5
+no cdp log mismatch duplex
+!
+! logging configuration
+archive
+ log config
+  logging enable
+  logging size 200
+  notify syslog contenttype plaintext
+  hidekeys
+!
+!logging trap debugging
+!logging %ls
+!no cdp log mismatch duplex
+!
+!syslog server configuration
+logging host %lh
+logging message-counter syslog
+no cdp log mismatch duplex
+!
+!snmp server  
+snmp-server community public RO
+snmp-server community private RW
+snmp-server enable traps envmon fan shutdown temperature status
+snmp-server enable traps memory bufferpeak
+snmp-server enable traps config-copy
+snmp-server enable traps config
+snmp-server enable traps cpu threshold
+snmp-server host %sh version 2c hola_trap
+!
+tftp-server nvram:startup-config
+!
+!Telnet 
+!
+line con 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+ stopbits 1
+line aux 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+ stopbits 1
+line vty 0 4
+ password %pass
+ logging synchronous
+ login local
+ transport input all
+!
+process cpu threshold type total rising 80 interval 5
+process cpu statistics limit entry-percentage 80
+!
+end

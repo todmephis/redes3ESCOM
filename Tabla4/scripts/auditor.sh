@@ -3,14 +3,14 @@ echo "Obteniendo configuraciones"
 HOST="192.168.1."
 HOST16="192.168.1.1"
 #R16="R16"
-CONF_PATH="/tftpboot/snmp_manager/routerconfig"
-T_PATH="/tftpboot/snmp_manager/templates"
-O_PATH="/tftpboot/snmp_manager/outputs"
+CONF_PATH="../routerconfig"
+T_PATH="../templates"
+O_PATH="../outputs"
 CH_PATH="$O_PATH/changes"
 R="R"
 SLEEP="/bin/sleep"
 SENDFILE="R16.tmp"
-FILENAME="/tftpboot/snmp_manager/outputs/$2"
+FILENAME="../inputs/routers.txt"
 echo $FILENAME
 #FILENAME='/tftpboot/snmp_manager/inputs/routers.txt'
 #FILENAME=$FILEPATH/$FILE 
@@ -33,8 +33,8 @@ a=16
 i=1
 while read line; do
 # 
-echo "Obteniendo la configuración de $line..."
-echo "get startup-config $CONF_PATH/$line" | /usr/bin/tftp $line
+echo "Obteniendo la configuración de $R$i vía $line..."
+echo "get startup-config $CONF_PATH/$R$i" | /usr/bin/tftp $line
 echo "quit" #| /usr/bin/tftp $HOST$i
 if [[ $1 = 'T' ]]; then 
 	#echo "El archivo de configuración ha cambiado, la plantilla se restaurará." 
@@ -62,6 +62,8 @@ elif [[ $1 = 'A' ]]; then
 	else 
 		echo "No se han encontrado cambios"
 	fi
+else
+	echo "Configuraciones recolectadas y guardadas en $CONF_PATH"
 fi
 i=$((i+1))
 done < $FILENAME
