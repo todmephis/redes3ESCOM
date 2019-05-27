@@ -12,8 +12,7 @@ boot-start-marker						boot-start-marker
 boot-end-marker							boot-end-marker
 !								!
 logging message-counter syslog					logging message-counter syslog
-enable secret 5 $1$X6Zd$p9B4ge9qHk0ysLySodh7t1			enable secret 5 $1$X6Zd$p9B4ge9qHk0ysLySodh7t1
-enable password 1234						enable password 1234
+enable secret 5 $1$6m13$molQSZenKstXxhE.FvUUD/			enable secret 5 $1$6m13$molQSZenKstXxhE.FvUUD/
 !								!
 no aaa new-model						no aaa new-model
 ip source-route							ip source-route
@@ -43,7 +42,7 @@ multilink bundle-name authenticated				multilink bundle-name authenticated
 !								!
 !								!
 !								!
-username cisco password 0 1234					username cisco password 0 1234
+username cisco password 0 cisco					username cisco password 0 cisco
 archive								archive
  log config							 log config
   hidekeys							  hidekeys
@@ -59,8 +58,7 @@ ip tcp synwait-time 5						ip tcp synwait-time 5
 !								!
 interface FastEthernet0/0					interface FastEthernet0/0
  ip address 192.168.1.1 255.255.255.252				 ip address 192.168.1.1 255.255.255.252
- shutdown						      |	 duplex auto
- duplex half						      |	 speed auto
+ duplex half							 duplex half
 !								!
 interface Serial1/0						interface Serial1/0
  no ip address							 no ip address
@@ -108,17 +106,16 @@ interface FastEthernet3/0					interface FastEthernet3/0
 !								!
 interface FastEthernet4/0					interface FastEthernet4/0
  ip address 192.168.1.117 255.255.255.252			 ip address 192.168.1.117 255.255.255.252
+ ip flow ingress						 ip flow ingress
+ ip flow egress							 ip flow egress
  duplex auto							 duplex auto
  speed auto							 speed auto
 !								!
 interface FastEthernet4/1					interface FastEthernet4/1
- ip address 192.168.1.121 255.255.255.252			 ip address 192.168.1.121 255.255.255.252
+ ip address 192.168.1.9 255.255.255.248			      |	 no ip address
+ shutdown							 shutdown
  duplex auto							 duplex auto
  speed auto							 speed auto
-!								!
-router rip							router rip
- version 2							 version 2
- network 192.168.1.0						 network 192.168.1.0
 !								!
 ip forward-protocol nd						ip forward-protocol nd
 ip route 192.168.1.8 255.255.255.252 192.168.1.6		ip route 192.168.1.8 255.255.255.252 192.168.1.6
@@ -133,6 +130,8 @@ ip route 192.168.1.40 255.255.255.252 192.168.1.2		ip route 192.168.1.40 255.255
 ip route 192.168.1.44 255.255.255.252 192.168.1.2		ip route 192.168.1.44 255.255.255.252 192.168.1.2
 ip route 192.168.1.48 255.255.255.252 192.168.1.2		ip route 192.168.1.48 255.255.255.252 192.168.1.2
 ip route 192.168.1.52 255.255.255.252 192.168.1.18		ip route 192.168.1.52 255.255.255.252 192.168.1.18
+ip route 192.168.1.52 255.255.255.252 192.168.1.22		ip route 192.168.1.52 255.255.255.252 192.168.1.22
+ip route 192.168.1.52 255.255.255.252 192.168.1.2		ip route 192.168.1.52 255.255.255.252 192.168.1.2
 ip route 192.168.1.56 255.255.255.252 192.168.1.2		ip route 192.168.1.56 255.255.255.252 192.168.1.2
 ip route 192.168.1.60 255.255.255.252 192.168.1.2		ip route 192.168.1.60 255.255.255.252 192.168.1.2
 ip route 192.168.1.64 255.255.255.252 192.168.1.2		ip route 192.168.1.64 255.255.255.252 192.168.1.2
@@ -150,6 +149,8 @@ ip route 192.168.1.116 255.255.255.252 192.168.1.119		ip route 192.168.1.116 255
 no ip http server						no ip http server
 no ip http secure-server					no ip http secure-server
 !								!
+ip flow-export version 9					ip flow-export version 9
+ip flow-export destination 192.168.1.118 5555			ip flow-export destination 192.168.1.118 5555
 !								!
 !								!
 logging trap debugging						logging trap debugging
@@ -160,13 +161,99 @@ no cdp log mismatch duplex					no cdp log mismatch duplex
 !								!
 !								!
 !								!
-snmp-server community public RO					snmp-server community public RO
-snmp-server community private RW				snmp-server community private RW
-snmp-server enable traps envmon fan shutdown temperature stat	snmp-server enable traps envmon fan shutdown temperature stat
+snmp-server enable traps snmp authentication linkdown linkup 	snmp-server enable traps snmp authentication linkdown linkup 
+snmp-server enable traps vrrp					snmp-server enable traps vrrp
+snmp-server enable traps ds1					snmp-server enable traps ds1
+snmp-server enable traps call-home message-send-fail server-f	snmp-server enable traps call-home message-send-fail server-f
+snmp-server enable traps tty					snmp-server enable traps tty
+snmp-server enable traps gatekeeper				snmp-server enable traps gatekeeper
+snmp-server enable traps eigrp					snmp-server enable traps eigrp
+snmp-server enable traps xgcp					snmp-server enable traps xgcp
+snmp-server enable traps ethernet cfm cc mep-up mep-down cros	snmp-server enable traps ethernet cfm cc mep-up mep-down cros
+snmp-server enable traps ethernet cfm crosscheck mep-missing 	snmp-server enable traps ethernet cfm crosscheck mep-missing 
+snmp-server enable traps flash insertion removal		snmp-server enable traps flash insertion removal
+snmp-server enable traps srp					snmp-server enable traps srp
+snmp-server enable traps ds3					snmp-server enable traps ds3
+snmp-server enable traps envmon					snmp-server enable traps envmon
+snmp-server enable traps isdn call-information			snmp-server enable traps isdn call-information
+snmp-server enable traps isdn layer2				snmp-server enable traps isdn layer2
+snmp-server enable traps isdn chan-not-avail			snmp-server enable traps isdn chan-not-avail
+snmp-server enable traps isdn ietf				snmp-server enable traps isdn ietf
+snmp-server enable traps ima					snmp-server enable traps ima
+snmp-server enable traps diameter				snmp-server enable traps diameter
+snmp-server enable traps channel				snmp-server enable traps channel
+snmp-server enable traps ip local pool				snmp-server enable traps ip local pool
+snmp-server enable traps aaa_server				snmp-server enable traps aaa_server
+snmp-server enable traps atm subif				snmp-server enable traps atm subif
+snmp-server enable traps bgp					snmp-server enable traps bgp
+snmp-server enable traps bstun					snmp-server enable traps bstun
+snmp-server enable traps bulkstat collection transfer		snmp-server enable traps bulkstat collection transfer
+snmp-server enable traps cef resource-failure peer-state-chan	snmp-server enable traps cef resource-failure peer-state-chan
+snmp-server enable traps memory bufferpeak			snmp-server enable traps memory bufferpeak
+snmp-server enable traps cnpd					snmp-server enable traps cnpd
 snmp-server enable traps config-copy				snmp-server enable traps config-copy
 snmp-server enable traps config					snmp-server enable traps config
+snmp-server enable traps config-ctid				snmp-server enable traps config-ctid
+snmp-server enable traps dial					snmp-server enable traps dial
+snmp-server enable traps dlsw					snmp-server enable traps dlsw
+snmp-server enable traps dsp card-status			snmp-server enable traps dsp card-status
+snmp-server enable traps dsp oper-state				snmp-server enable traps dsp oper-state
+snmp-server enable traps entity					snmp-server enable traps entity
+snmp-server enable traps fru-ctrl				snmp-server enable traps fru-ctrl
+snmp-server enable traps resource-policy			snmp-server enable traps resource-policy
+snmp-server enable traps frame-relay multilink bundle-mismatc	snmp-server enable traps frame-relay multilink bundle-mismatc
+snmp-server enable traps frame-relay				snmp-server enable traps frame-relay
+snmp-server enable traps frame-relay subif			snmp-server enable traps frame-relay subif
+snmp-server enable traps hsrp					snmp-server enable traps hsrp
+snmp-server enable traps ipmobile				snmp-server enable traps ipmobile
+snmp-server enable traps ipmulticast				snmp-server enable traps ipmulticast
+snmp-server enable traps mpls ldp				snmp-server enable traps mpls ldp
+snmp-server enable traps mpls traffic-eng			snmp-server enable traps mpls traffic-eng
+snmp-server enable traps mpls fast-reroute protected		snmp-server enable traps mpls fast-reroute protected
+snmp-server enable traps msdp					snmp-server enable traps msdp
+snmp-server enable traps mvpn					snmp-server enable traps mvpn
+snmp-server enable traps ospf state-change			snmp-server enable traps ospf state-change
+snmp-server enable traps ospf errors				snmp-server enable traps ospf errors
+snmp-server enable traps ospf retransmit			snmp-server enable traps ospf retransmit
+snmp-server enable traps ospf lsa				snmp-server enable traps ospf lsa
+snmp-server enable traps ospf cisco-specific state-change nss	snmp-server enable traps ospf cisco-specific state-change nss
+snmp-server enable traps ospf cisco-specific state-change sha	snmp-server enable traps ospf cisco-specific state-change sha
+snmp-server enable traps ospf cisco-specific state-change sha	snmp-server enable traps ospf cisco-specific state-change sha
+snmp-server enable traps ospf cisco-specific errors		snmp-server enable traps ospf cisco-specific errors
+snmp-server enable traps ospf cisco-specific retransmit		snmp-server enable traps ospf cisco-specific retransmit
+snmp-server enable traps ospf cisco-specific lsa		snmp-server enable traps ospf cisco-specific lsa
+snmp-server enable traps pim neighbor-change rp-mapping-chang	snmp-server enable traps pim neighbor-change rp-mapping-chang
+snmp-server enable traps pppoe					snmp-server enable traps pppoe
 snmp-server enable traps cpu threshold				snmp-server enable traps cpu threshold
+snmp-server enable traps rsvp					snmp-server enable traps rsvp
+snmp-server enable traps ipsla					snmp-server enable traps ipsla
+snmp-server enable traps stun					snmp-server enable traps stun
+snmp-server enable traps syslog					snmp-server enable traps syslog
+snmp-server enable traps l2tun session				snmp-server enable traps l2tun session
+snmp-server enable traps l2tun pseudowire status		snmp-server enable traps l2tun pseudowire status
+snmp-server enable traps pw vc					snmp-server enable traps pw vc
+snmp-server enable traps event-manager				snmp-server enable traps event-manager
+snmp-server enable traps firewall serverstatus			snmp-server enable traps firewall serverstatus
+snmp-server enable traps rf					snmp-server enable traps rf
+snmp-server enable traps isakmp policy add			snmp-server enable traps isakmp policy add
+snmp-server enable traps isakmp policy delete			snmp-server enable traps isakmp policy delete
+snmp-server enable traps isakmp tunnel start			snmp-server enable traps isakmp tunnel start
+snmp-server enable traps isakmp tunnel stop			snmp-server enable traps isakmp tunnel stop
+snmp-server enable traps ipsec cryptomap add			snmp-server enable traps ipsec cryptomap add
+snmp-server enable traps ipsec cryptomap delete			snmp-server enable traps ipsec cryptomap delete
+snmp-server enable traps ipsec cryptomap attach			snmp-server enable traps ipsec cryptomap attach
+snmp-server enable traps ipsec cryptomap detach			snmp-server enable traps ipsec cryptomap detach
+snmp-server enable traps ipsec tunnel start			snmp-server enable traps ipsec tunnel start
+snmp-server enable traps ipsec tunnel stop			snmp-server enable traps ipsec tunnel stop
+snmp-server enable traps ipsec too-many-sas			snmp-server enable traps ipsec too-many-sas
+snmp-server enable traps alarms informational			snmp-server enable traps alarms informational
+snmp-server enable traps ccme					snmp-server enable traps ccme
+snmp-server enable traps srst					snmp-server enable traps srst
+snmp-server enable traps mpls vpn				snmp-server enable traps mpls vpn
+snmp-server enable traps voice					snmp-server enable traps voice
+snmp-server enable traps dnis					snmp-server enable traps dnis
 snmp-server host 192.168.1.118 version 2c hola_trap 		snmp-server host 192.168.1.118 version 2c hola_trap 
+snmp-server host 192.168.1.118 public 				snmp-server host 192.168.1.118 public 
 tftp-server nvram:startup-config				tftp-server nvram:startup-config
 !								!
 control-plane							control-plane
@@ -192,10 +279,7 @@ line aux 0							line aux 0
  logging synchronous						 logging synchronous
  stopbits 1							 stopbits 1
 line vty 0 4							line vty 0 4
- password 1234							 password 1234
  login local							 login local
  transport input all						 transport input all
 !								!
-process cpu threshold type total rising 80 interval 5		process cpu threshold type total rising 80 interval 5
-process cpu statistics limit entry-percentage 80		process cpu statistics limit entry-percentage 80
 end								end

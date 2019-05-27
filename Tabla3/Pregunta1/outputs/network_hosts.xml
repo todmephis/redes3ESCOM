@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE nmaprun>
+<?xml-stylesheet href="file:///usr/bin/../share/nmap/nmap.xsl" type="text/xsl"?>
+<!-- Nmap 7.40 scan initiated Sun May 26 03:05:17 2019 as: /usr/bin/nmap -vvv -sP -iL outputs/subnets.list -oX outputs/network_hosts.xml -->
+<nmaprun scanner="nmap" args="/usr/bin/nmap -vvv -sP -iL outputs/subnets.list -oX outputs/network_hosts.xml" start="1558857917" startstr="Sun May 26 03:05:17 2019" version="7.40" xmloutputversion="1.04">
+<verbose level="3"/>
+<debugging level="0"/>
+<taskbegin task="ARP Ping Scan" time="1558857917"/>
+<taskend task="ARP Ping Scan" time="1558857917" extrainfo="1 total hosts"/>
+<host><status state="down" reason="no-response" reason_ttl="0"/>
+<address addr="192.168.1.116" addrtype="ipv4"/>
+</host>
+<taskbegin task="ARP Ping Scan" time="1558857917"/>
+<taskend task="ARP Ping Scan" time="1558857918" extrainfo="1 total hosts"/>
+<host><status state="down" reason="no-response" reason_ttl="0"/>
+<address addr="192.168.1.0" addrtype="ipv4"/>
+</host>
+<taskbegin task="Ping Scan" time="1558857918"/>
+<taskend task="Ping Scan" time="1558857921" extrainfo="1 total hosts"/>
+<host><status state="down" reason="no-response" reason_ttl="0"/>
+<address addr="192.168.1.4" addrtype="ipv4"/>
+</host>
+<runstats><finished time="1558857921" timestr="Sun May 26 03:05:21 2019" elapsed="4.08" summary="Nmap done at Sun May 26 03:05:21 2019; 3 IP addresses (0 hosts up) scanned in 4.08 seconds" exit="success"/><hosts up="0" down="3" total="3"/>
+</runstats>
+</nmaprun>

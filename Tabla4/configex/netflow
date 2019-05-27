@@ -1,0 +1,8 @@
+config terminal
+ip flow-export version 9
+ip flow-export destination 192.168.1.118 5555
+interface FastEthernet4/0
+ip flow ingress
+ip flow egress
+exit
+wr

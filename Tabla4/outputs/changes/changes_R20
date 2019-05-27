@@ -1,0 +1,176 @@
+!							      <
+
+!								!
+upgrade fpd auto						upgrade fpd auto
+version 12.4							version 12.4
+service timestamps debug datetime msec				service timestamps debug datetime msec
+service timestamps log datetime msec				service timestamps log datetime msec
+no service password-encryption					no service password-encryption
+!								!
+hostname R20							hostname R20
+!								!
+boot-start-marker						boot-start-marker
+boot-end-marker							boot-end-marker
+!								!
+logging message-counter syslog					logging message-counter syslog
+enable secret 5 $1$mSV8$JzjrGC0uESqO1od6B2dZZ1			enable secret 5 $1$mSV8$JzjrGC0uESqO1od6B2dZZ1
+!								!
+no aaa new-model						no aaa new-model
+ip source-route							ip source-route
+no ip icmp rate-limit unreachable				no ip icmp rate-limit unreachable
+ip cef								ip cef
+!								!
+!								!
+!								!
+!								!
+no ip domain lookup						no ip domain lookup
+no ipv6 cef							no ipv6 cef
+!								!
+multilink bundle-name authenticated				multilink bundle-name authenticated
+!								!
+!								!
+!								!
+!								!
+!								!
+!								!
+!								!
+!								!
+!								!
+!								!
+!								!
+!								!
+!								!
+!								!
+!								!
+!								!
+username cisco password 0 cisco					username cisco password 0 cisco
+archive								archive
+ log config							 log config
+  hidekeys							  hidekeys
+! 								! 
+!								!
+!								!
+!								!
+!								!
+ip tcp synwait-time 5						ip tcp synwait-time 5
+!								!
+!								!
+!								!
+!								!
+interface FastEthernet0/0					interface FastEthernet0/0
+ ip address 192.168.1.18 255.255.255.252			 ip address 192.168.1.18 255.255.255.252
+ duplex half							 duplex half
+!								!
+interface Serial1/0						interface Serial1/0
+ no ip address							 no ip address
+ shutdown							 shutdown
+ serial restart-delay 0						 serial restart-delay 0
+!								!
+interface Serial1/1						interface Serial1/1
+ no ip address							 no ip address
+ shutdown							 shutdown
+ serial restart-delay 0						 serial restart-delay 0
+!								!
+interface Serial1/2						interface Serial1/2
+ no ip address							 no ip address
+ shutdown							 shutdown
+ serial restart-delay 0						 serial restart-delay 0
+!								!
+interface Serial1/3						interface Serial1/3
+ no ip address							 no ip address
+ shutdown							 shutdown
+ serial restart-delay 0						 serial restart-delay 0
+!								!
+interface Serial2/0						interface Serial2/0
+ no ip address							 no ip address
+ shutdown							 shutdown
+ serial restart-delay 0						 serial restart-delay 0
+!								!
+interface Serial2/1						interface Serial2/1
+ no ip address							 no ip address
+ shutdown							 shutdown
+ serial restart-delay 0						 serial restart-delay 0
+!								!
+interface Serial2/2						interface Serial2/2
+ no ip address							 no ip address
+ shutdown							 shutdown
+ serial restart-delay 0						 serial restart-delay 0
+!								!
+interface Serial2/3						interface Serial2/3
+ no ip address							 no ip address
+ shutdown							 shutdown
+ serial restart-delay 0						 serial restart-delay 0
+!								!
+interface FastEthernet3/0					interface FastEthernet3/0
+ ip address 192.168.1.22 255.255.255.252			 ip address 192.168.1.22 255.255.255.252
+ duplex half							 duplex half
+!								!
+interface FastEthernet4/0					interface FastEthernet4/0
+ ip address 192.168.1.54 255.255.255.252			 ip address 192.168.1.54 255.255.255.252
+ duplex auto							 duplex auto
+ speed auto							 speed auto
+!								!
+interface FastEthernet4/1					interface FastEthernet4/1
+ no ip address							 no ip address
+ shutdown							 shutdown
+ duplex auto							 duplex auto
+ speed auto							 speed auto
+!								!
+router ospf 20							router ospf 20
+ log-adjacency-changes						 log-adjacency-changes
+ network 192.168.1.52 0.0.0.3 area 0				 network 192.168.1.52 0.0.0.3 area 0
+!								!
+ip forward-protocol nd						ip forward-protocol nd
+ip route 192.168.1.0 255.255.255.252 192.168.1.21		ip route 192.168.1.0 255.255.255.252 192.168.1.21
+ip route 192.168.1.0 255.255.255.252 192.168.1.17		ip route 192.168.1.0 255.255.255.252 192.168.1.17
+ip route 192.168.1.4 255.255.255.252 192.168.1.21		ip route 192.168.1.4 255.255.255.252 192.168.1.21
+ip route 192.168.1.4 255.255.255.252 192.168.1.17		ip route 192.168.1.4 255.255.255.252 192.168.1.17
+ip route 192.168.1.8 255.255.255.252 192.168.1.17		ip route 192.168.1.8 255.255.255.252 192.168.1.17
+ip route 192.168.1.12 255.255.255.252 192.168.1.21		ip route 192.168.1.12 255.255.255.252 192.168.1.21
+ip route 192.168.1.16 255.255.255.252 192.168.1.17		ip route 192.168.1.16 255.255.255.252 192.168.1.17
+ip route 192.168.1.20 255.255.255.252 192.168.1.21		ip route 192.168.1.20 255.255.255.252 192.168.1.21
+ip route 192.168.1.24 255.255.255.252 192.168.1.17		ip route 192.168.1.24 255.255.255.252 192.168.1.17
+ip route 192.168.1.36 255.255.255.252 192.168.1.53		ip route 192.168.1.36 255.255.255.252 192.168.1.53
+ip route 192.168.1.52 255.255.255.252 192.168.1.53		ip route 192.168.1.52 255.255.255.252 192.168.1.53
+ip route 192.168.1.104 255.255.255.252 192.168.1.17		ip route 192.168.1.104 255.255.255.252 192.168.1.17
+ip route 192.168.1.104 255.255.255.252 192.168.1.21		ip route 192.168.1.104 255.255.255.252 192.168.1.21
+no ip http server						no ip http server
+no ip http secure-server					no ip http secure-server
+!								!
+!								!
+!								!
+no cdp log mismatch duplex					no cdp log mismatch duplex
+!								!
+!								!
+!								!
+!								!
+!								!
+tftp-server nvram:startup-config				tftp-server nvram:startup-config
+!								!
+control-plane							control-plane
+!								!
+!								!
+!								!
+!								!
+!								!
+!								!
+!								!
+gatekeeper							gatekeeper
+ shutdown							 shutdown
+!								!
+!								!
+line con 0							line con 0
+ exec-timeout 0 0						 exec-timeout 0 0
+ privilege level 15						 privilege level 15
+ logging synchronous						 logging synchronous
+ stopbits 1							 stopbits 1
+line aux 0							line aux 0
+ exec-timeout 0 0						 exec-timeout 0 0
+ privilege level 15						 privilege level 15
+ logging synchronous						 logging synchronous
+ stopbits 1							 stopbits 1
+line vty 0 4							line vty 0 4
+ login local							 login local
+ transport input all						 transport input all
+!								!
+end								end

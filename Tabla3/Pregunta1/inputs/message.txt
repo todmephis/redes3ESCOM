@@ -1,0 +1,6 @@
+($DEPARTMENT_NAME)Se han encontrado fallos mediante polling.
+El sistema SNMP ha levantado una notificación.
+Las siguientes subredes han fallado en responder:
+
+
+Subredes que han respondido exitosamente al polling:

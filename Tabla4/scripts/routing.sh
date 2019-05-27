@@ -1,5 +1,6 @@
 #!/bin/bash
 sudo tunctl -t tap0 -u valtzz
+sudo route del -net 0.0.0.0 gw 192.168.1.117 dev tap0
 sudo route add -net 192.168.1.0/30 gw 192.168.1.117 dev tap0
 sudo route add -net 192.168.1.4/30 gw 192.168.1.117 dev tap0
 sudo route add -net 192.168.1.8/30 gw 192.168.1.117 dev tap0

@@ -1,1 +1,3 @@
-create database if not exists snmp;use snmp;create table if not exists snmp.inventario(id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,Router VARCHAR(3),Nombre VARCHAR(50),Descripcion VARCHAR(60),PID VARCHAR(30),VID VARCHAR(30),NS VARCHAR(30), Date_Time DATETIME);
+create database if not exists redes3proj;
+use redes3proj;
+create table if not exists redes3proj.inventario(id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,router VARCHAR(3),nombre VARCHAR(50),descripcion VARCHAR(60),pid VARCHAR(30),vid VARCHAR(30),ns VARCHAR(30), fecha DATETIME);

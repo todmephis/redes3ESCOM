@@ -53,12 +53,12 @@ if [[ $1 = 'T' ]]; then
 	fi
 elif [[ $1 = 'A' ]]; then
 	echo "Investigando cambios ..."
-	diff --brief <(sort $CONF_PATH/$line) <(sort $T_PATH/$line) >/dev/null
+	diff --brief <(sort $CONF_PATH/$R$i) <(sort $T_PATH/$R$i) >/dev/null
 	comp_value=$?
 	echo $comp_value
 	if [ $comp_value -eq 1 ]; then
-		diff -y $CONF_PATH/$line $T_PATH/$line > $CH_PATH/changes_$line
-		echo "Cambios detectados: Se han reportado en $CH_PATH/changes_$line"
+		diff -y $CONF_PATH/$R$i $T_PATH/$R$i > $CH_PATH/changes_$R$i
+		echo "Cambios detectados: Se han reportado en $CH_PATH/changes_$R$i"
 	else 
 		echo "No se han encontrado cambios"
 	fi

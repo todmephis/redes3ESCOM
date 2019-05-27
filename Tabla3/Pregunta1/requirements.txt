@@ -1,0 +1,4 @@
+getpass
+keyboard
+telnetlib
+python-telegram-bot
