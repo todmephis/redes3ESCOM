@@ -1,3 +1,49 @@
-create database if not exists redes3proj;
-use redes3proj;
-create table if not exists redes3proj.inventario(id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,router VARCHAR(3),nombre VARCHAR(50),descripcion VARCHAR(60),pid VARCHAR(30),vid VARCHAR(30),ns VARCHAR(30), fecha DATETIME);
+-- MySQL Workbench Forward Engineering
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+-- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+-- -----------------------------------------------------
+-- Schema redes3proj
+-- -----------------------------------------------------
+DROP SCHEMA IF EXISTS `redes3proj` ;
+-- -----------------------------------------------------
+-- Schema redes3proj
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `redes3proj` ;
+-- -----------------------------------------------------
+-- Table `redes3proj`.`Dispositivo`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `redes3proj`.`Dispositivo` ;
+CREATE TABLE IF NOT EXISTS `redes3proj`.`Dispositivo` (   `idDispositivo` INT(11) NOT NULL AUTO_INCREMENT,   `modelo` VARCHAR(45) NOT NULL,   `sistemaOperativo` VARCHAR(45) NOT NULL,   `numeroSerie` VARCHAR(45) NOT NULL,   `fabricante` VARCHAR(45) NOT NULL,   `nombre` VARCHAR(45) NOT NULL,   `lastUpdate` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,   PRIMARY KEY (`idDispositivo`)) ENGINE = InnoDB DEFAULT CHARACTER SET = utf8;
+USE `redes3proj` ;
+-- -----------------------------------------------------
+-- Table `redes3proj`.`Interfaz`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `redes3proj`.`Interfaz` ;
+CREATE TABLE IF NOT EXISTS `redes3proj`.`Interfaz` (`idInterfaz` INT(11) NOT NULL AUTO_INCREMENT,`estado` TINYINT(4) NOT NULL, `nombre` VARCHAR(45) NOT NULL DEFAULT '0', `tipo` VARCHAR(20) NOT NULL, `macAddr` VARCHAR(19) NOT NULL, `lastUpdate` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, `Dispositivo_idDispositivo` INT(11) NOT NULL, PRIMARY KEY (`idInterfaz`, `Dispositivo_idDispositivo`), INDEX `fk_Interfaz_Dispositivo_idx` (`Dispositivo_idDispositivo` ASC), CONSTRAINT `fk_Interfaz_Dispositivo`FOREIGN KEY (`Dispositivo_idDispositivo`) REFERENCES `redes3proj`.`Dispositivo` (`idDispositivo`) ON DELETE RESTRICT ON UPDATE RESTRICT) ENGINE = InnoDB DEFAULT CHARACTER SET = utf8;
+-- -----------------------------------------------------
+-- Table `redes3proj`.`IpAddr`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `redes3proj`.`IpAddr` ;
+CREATE TABLE IF NOT EXISTS `redes3proj`.`IpAddr` (   `idIpAddr` INT(11) NOT NULL AUTO_INCREMENT,   `direccionIP` VARCHAR(17) NOT NULL,   `lastUpdate` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,   `Interfaz_Dispositivo_idDispositivo` INT(11) NOT NULL,   `Interfaz_idInterfaz` INT(11) NOT NULL,   PRIMARY KEY (`idIpAddr`),   INDEX `fk_IpAddr_Interfaz1_idx` (`Interfaz_idInterfaz` ASC, `Interfaz_Dispositivo_idDispositivo` ASC) ,   CONSTRAINT `fk_IpAddr_Interfaz1`     FOREIGN KEY (`Interfaz_idInterfaz` , `Interfaz_Dispositivo_idDispositivo`)     REFERENCES `redes3proj`.`Interfaz` (`idInterfaz` , `Dispositivo_idDispositivo`)) ENGINE = InnoDB DEFAULT CHARACTER SET = utf8;
+-- -----------------------------------------------------
+-- Table `redes3proj`.`Registro`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `redes3proj`.`Registro` ;
+CREATE TABLE IF NOT EXISTS `redes3proj`.`Registro` (   `fechaHora` DATETIME NOT NULL,   `estado` TINYINT(4) NOT NULL,   `temperatura` INT(11) NULL DEFAULT NULL,   `usoCPU` INT(11) NULL DEFAULT NULL,   `usoRAM` INT(11) NULL DEFAULT NULL,   `cambioConf` TINYINT(4) NULL DEFAULT NULL,   `lastUpdate` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,   `Dispositivo_idDispositivo` INT(11) NOT NULL,   INDEX `fk_Registro_Dispositivo1_idx` (`Dispositivo_idDispositivo` ASC) ,   CONSTRAINT `fk_Registro_Dispositivo1`     FOREIGN KEY (`Dispositivo_idDispositivo`)     REFERENCES `redes3proj`.`Dispositivo` (`idDispositivo`)     ON DELETE RESTRICT     ON UPDATE RESTRICT) ENGINE = InnoDB DEFAULT CHARACTER SET = utf8;
+-- -----------------------------------------------------
+-- Table `redes3proj`.`Inventario`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `redes3proj`.`Inventario` ;
+CREATE TABLE IF NOT EXISTS `redes3proj`.`Inventario` (   `idinventario` INT NOT NULL AUTO_INCREMENT,   `hostname` VARCHAR(25) NULL,   `nombre` VARCHAR(50) NULL,   `descripcion` VARCHAR(60) NULL,   `pid` VARCHAR(30) NULL,   `vid` VARCHAR(30) NULL,   `ns` VARCHAR(30) NULL,   `fecha` DATETIME NULL,   `lastUpdate` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,   `Dispositivo_idDispositivo` INT(11) NOT NULL,   PRIMARY KEY (`idinventario`),   INDEX `fk_inventario_Dispositivo_idx` (`Dispositivo_idDispositivo` ASC) ,   CONSTRAINT `fk_inventario_Dispositivo`     FOREIGN KEY (`Dispositivo_idDispositivo`)     REFERENCES `redes3proj`.`Dispositivo` (`idDispositivo`)     ON DELETE NO ACTION     ON UPDATE NO ACTION) ENGINE = InnoDB;
+-- -----------------------------------------------------
+-- Table `redes3proj`.`Users`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `redes3proj`.`Users` ;
+CREATE TABLE IF NOT EXISTS `redes3proj`.`Users` (   `idusers` INT(11) NOT NULL,   `username` VARCHAR(100) NOT NULL,   `email` VARCHAR(100) NOT NULL,   `password` VARCHAR(100) NOT NULL,   `userType` TINYINT(1) NOT NULL,   PRIMARY KEY (`idusers`)) ENGINE = InnoDB;
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

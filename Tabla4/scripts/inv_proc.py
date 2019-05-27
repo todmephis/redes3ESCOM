@@ -12,10 +12,13 @@ def create_database():
 																				  #encrypted or secured for security reasons.
 	cursor = database.cursor()													  
 	cursor._defer_warnings = True
-	for line in open('db'):
-		print('DEBUG:',line) #debug
-		cursor.execute(line)
-	print('DEBUG: Database is up')
+	if cursor.execute("select schema_name from information_schema.schemata where schema_name = 'redes3proj';") == 1:
+		pass
+	else:
+		for line in open('db'):
+			#print('DEBUG:',line) #debug
+			cursor.execute(line)
+		print('DEBUG: Database is up')
 
 def process_inv_file(router):
 	d = {}
@@ -90,9 +93,11 @@ def Load(args,router):#Loads data into several tables
 	database = MySQLdb.connect (host="localhost", user = "root", passwd = "root")																	  																				  
 	cursor = database.cursor()	
 	cursor._defer_warnings = True
-	query = "INSERT INTO redes3proj.inventario (router,nombre,descripcion,pid,vid,ns,fecha)" \
-			"VALUES ( %s, %s, %s, %s, %s, %s, %s)"
-	args = (router,args['NAME'],args['DESCR'],args['PID'],args['VID'],args['SN'],date)
+	id = router[1:]
+	#print(id)
+	query = "INSERT INTO redes3proj.Inventario (hostname,nombre,descripcion,pid,vid,ns,fecha,Dispositivo_idDispositivo)" \
+			"VALUES ( %s, %s, %s, %s, %s, %s, %s , %s )"
+	args = (router,args['NAME'],args['DESCR'],args['PID'],args['VID'],args['SN'],date,id)
 	cursor.execute(query,args)
 	print(cursor._last_executed)
 	database.commit()
