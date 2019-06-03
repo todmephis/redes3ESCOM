@@ -5,7 +5,7 @@
 #Are changes in device configuration detected, reported, and investigated?
 #Is there a well documented base configuration template?
 #Can running configurations be audited against config templates?
-./routing
+./routing.sh
 ./inv_coll.sh #P1
 ./auditor.sh #P2
 python3 changes.py #P3
