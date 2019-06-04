@@ -47,14 +47,15 @@ def write_template(message,lines,template):
 	#outF.write(''+lines+'\n')
 	outF.close()
 
-def send_mail(names,emails,message_template,subject,template):
+def send_mail(names,emails,message_template,subject,template,notificacion_t):
+	'''
 	repF = open(template,"r")
 	notificacion_t =''
 	noti = ''
 	for x in repF:
 		notificacion_t = noti+repF.readline()
 		noti = notificacion_t
-
+	'''
 	bot = telegram.Bot(token='551346453:AAHdw97BnU_cv-i4FUmvtYKDEvkHTkbMSno') #TelegramBot Token
 	print("[DEBUG] {}".format(bot.get_me()))
 	bot.send_message(chat_id='8288143', text=notificacion_t) #Set chat_id

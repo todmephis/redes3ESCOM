@@ -6,6 +6,7 @@ import collections
 import time
 import threading
 import sendmail
+#from sendmail import get_contacts, read_template, write_template, send_mail
 
 '''
 for line in Pygtail("/var/log/snmp-logs/r16.log"):
@@ -17,6 +18,8 @@ for line in Pygtail("/var/log/snmp-logs/r16.log"):
 #LOG_FILE = os.path.abspath('/var/log/snmp-logs/r16.log')
 #LOG_FILE = os.path.abspath('/var/log/snmp-logs/r16.log')
 
+CONTACTS = 'mycontacts.txt'
+MAIL_TEMPL = 'template.txt'
 WATCH_FOR = [ 	'%LINK-3-UPDOWN ', #interface on/off
 				'%LINEPROTO-5-UPDOWN', #line protocol on/off
 				'%LINK-5-CHANGED', #LINK STAT CH
@@ -50,6 +53,16 @@ def tail(file, n):
 	#print(lines)
 	return lines
 
+
+def notific(message,lines):
+	report = open('report', "w")
+	report.write(message)
+	report.close()
+	names, emails = sendmail.get_contacts(CONTACTS)
+	message_template = sendmail.read_template(MAIL_TEMPL)
+	#message = 'Ha cambiado la configuración del router'+host+':'+'\n'+''
+	sendmail.write_template(message,'report',MAIL_TEMPL)
+	sendmail.send_mail(names,emails,message_template,'Notificación SNMP',MAIL_TEMPL,message)
 
 def action(lines,code):
 	#print('Got it')    
@@ -88,7 +101,9 @@ def log_an(lines,code):
 		else:
 			status == 'administrativamente inactivo' 
 		notify = 'Se ha cambiado el estado de la interfaz '+ interface +' del router '+hostname+ ' a ' + estado + ' en '+ date+'.'
-		print(notify)
+		
+		notific(notify,lines)
+		
 	elif code == '%SYS-1-CPURISINGTHRESHOLD':
 		start = lines.find(' r')
 		hostname = lines[start+1:start+4]
@@ -99,6 +114,9 @@ def log_an(lines,code):
 		#print(cpu_usage)
 		#print(hostname)
 		notify = 'Uso del CPU elevándose a un '+cpu_usage+' en '+hostname+'.'
+		notific(notify,lines)
+		
+
 	elif code == '%SYS-1-CPUFALLINGTHRESHOLD':
 		start = lines.find(' r')
 		hostname = lines[start+1:start+4]
@@ -107,16 +125,24 @@ def log_an(lines,code):
 		end = lines.find('%/')
 		cpu_usage = lines[start+4:end]
 		notify = 'Uso del CPU descendiendo a un '+cpu_usage+' en '+hostname+'.'
+		notific(notify,lines)
+		
+
 	elif code == '%SYS-5-CONFIG_I: Configured from console by console':
 		start = lines.find(' r')
 		hostname = lines[start+1:start+4]
 		hostname = hostname.upper()
 		notify = 'Se ha entrado al modo configuración en el router '+hostname+'.'
+		notific(notify,lines)
+		
+
 	elif code == '%SYS-6-LOGGINGHOST_STARTSTOP: Logging to host 192.168.1.118 port 514 stopped':
 		start = lines.find(' r')
 		hostname = lines[start+1:start+4]
 		hostname = hostname.upper()
 		notify = 'El router '+hostname+' ha dejado de usar el servidor de logging.'
+		notific(notify,lines)
+
 #Jun  2 19:00:05 r16 63: *Jun  2 19:00:07.463: %SYS-1-CPURISINGTHRESHOLD: Threshold: Total CPU Utilization(Total/Intr): 75%/100%, Top 3 processes(Pid/Util):  91/75%, 2/0%, 51/0%		
 # %LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet3/0, changed state to down
 
