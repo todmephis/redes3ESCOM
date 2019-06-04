@@ -1,0 +1,3 @@
+($DEPARTMENT_NAME)Se han encontrado fallos mediante polling.
+El sistema SNMP ha levantado una notificación.
+
