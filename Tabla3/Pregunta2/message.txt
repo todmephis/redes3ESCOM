@@ -1,0 +1,6 @@
+($DEPARTMENT_NAME).
+El sistema SNMP ha levantado una notificación.
+Ha llegado una trap al servidor:
+Jun  5 18:26:26 valtzz-Aspire-5742 snmptrapd[3663]: 2019-06-05 18:26:26 R16 [UDP: [192.168.1.117]:55382->[192.168.1.118]:162]:#012DISMAN-EVENT-MIB::sysUpTimeInstance = Timeticks: (50673) 0:08:26.73#011SNMPv2-MIB::snmpTrapOID.0 = OID: SNMPv2-SMI::enterprises.9.9.43.2.0.1#011SNMPv2-SMI::enterprises.9.9.43.1.1.6.1.3.5 = INTEGER: 1#011SNMPv2-SMI::enterprises.9.9.43.1.1.6.1.4.5 = INTEGER: 3#011SNMPv2-SMI::enterprises.9.9.43.1.1.6.1.5.5 = INTEGER: 4
+
+Se han hecho cambios a la configuración del agente.

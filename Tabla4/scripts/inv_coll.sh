@@ -22,11 +22,11 @@ i=1
 while read line; do
 router=$R$i
 #echo $router
+	
 echo "Obteniendo información de inventario de R$i vía $line..."
 #echo "get startup-config $CONF_PATH$R$i" | /usr/bin/tftp $line
 #echo $line
-($SLEEP 2;  echo "cisco"; $SLEEP 2; echo "cisco"; $SLEEP 2; echo "enable"; $SLEEP 2; echo "cisco"; echo "show inventory raw"; $SLEEP 2 ) | /usr/bin/telnet $line > $INV_PATH/R$i
-
+($SLEEP 2;  echo "cisco"; $SLEEP 2; echo "cisco"; $SLEEP 2; echo "enable"; $SLEEP 2; echo "cisco"; echo "show inventory raw"; $SLEEP 2 ) | /usr/bin/telnet $line > $INV_PATH/R$i 
 echo "quit" #| /usr/bin/tftp $HOST$i
 /usr/bin/python3 inv_proc.py $router
 #status=$?

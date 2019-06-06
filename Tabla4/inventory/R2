@@ -1,1 +1,12 @@
 Trying 192.168.1.65...
+Connected to 192.168.1.65.
+Escape character is '^]'.
+
+
+User Access Verification
+
+Username: cisco
+Password: 
+R2>enable
+Password: 
+R2#show inventory raw

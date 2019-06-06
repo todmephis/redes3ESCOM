@@ -7,7 +7,7 @@ def create_database():
 	#database connection
 	os.system('sudo service mysql start')
 	os.system('sudo service mysql.server start')
-	database = MySQLdb.connect (host="localhost", user = "root", passwd = "root") #connection user and password have been hardcoded given
+	database = MySQLdb.connect (host="10.100.64.50", user = "netuser", passwd = "123") #connection user and password have been hardcoded given
 																				  #the nature of the excercise. I'm aware credentials should be 
 																				  #encrypted or secured for security reasons.
 	cursor = database.cursor()													  
@@ -90,11 +90,14 @@ def Load(args,router):#Loads data into several tables
 	#Building a query 
 	now = datetime.datetime.now()
 	date = now.strftime("%Y-%m-%d %H:%M")
-	database = MySQLdb.connect (host="localhost", user = "root", passwd = "root")																	  																				  
+	#database = MySQLdb.connect (host="localhost", user = "root", passwd = "root")																	  																				  
+	database = MySQLdb.connect (host="10.100.64.50", user = "netuser", passwd = "123") 
 	cursor = database.cursor()	
 	cursor._defer_warnings = True
-	id = router[1:]
-	#print(id)
+	query = 'select idDispositivo from redes3proj.Dispositivo WHERE nombre = "'+router+'"'
+	cursor.execute(query)
+	ret = cursor.fetchall()
+	id = int(ret[0][0])
 	query = "INSERT INTO redes3proj.Inventario (hostname,nombre,descripcion,pid,vid,ns,fecha,Dispositivo_idDispositivo)" \
 			"VALUES ( %s, %s, %s, %s, %s, %s, %s , %s )"
 	args = (router,args['NAME'],args['DESCR'],args['PID'],args['VID'],args['SN'],date,id)
