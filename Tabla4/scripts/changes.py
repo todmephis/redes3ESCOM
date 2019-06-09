@@ -15,8 +15,8 @@ from itertools import tee
 import sendmail
 
 
-CONTACTS = '/tftpboot/snmp_manager/inputs/mycontacts.txt'
-MAIL_TEMPL = '/tftpboot/snmp_manager/reports/template.txt'
+CONTACTS = '../inputs/mycontacts.txt'
+MAIL_TEMPL = '..reports/template.txt'
 try:
 
     LOG_FILE = os.path.abspath('/var/log/syslog')

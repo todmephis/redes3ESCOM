@@ -5,17 +5,6 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import telegram
 
-f = open('/tftpboot/snmp_manager/inputs/data','r')
-
-MY_ADDRESS = f.readline()
-PASSWORD = f.readline()
-SMTP_HOST = f.readline()
-SMTP_PORT = f.readline()
-BOT_TOKEN = f.readline()
-TELEGRAM_ID = f.readline()
-
-#print(SMTP_HOST)
-
 def get_contacts(filename):
 	"""
 	Regresa listas con nombres y emails
@@ -56,34 +45,39 @@ def send_mail(names,emails,message_template,subject,template,notificacion_t):
 		notificacion_t = noti+repF.readline()
 		noti = notificacion_t
 	'''
-	bot = telegram.Bot(token='551346453:AAHdw97BnU_cv-i4FUmvtYKDEvkHTkbMSno') #TelegramBot Token
-	print("[DEBUG] {}".format(bot.get_me()))
-	bot.send_message(chat_id='8288143', text=notificacion_t) #Set chat_id
+	try:
+		bot = telegram.Bot(token='551346453:AAHdw97BnU_cv-i4FUmvtYKDEvkHTkbMSno') #TelegramBot Token
+		print("[DEBUG] {}".format(bot.get_me()))
+		bot.send_message(chat_id='8288143', text=notificacion_t) #Set chat_id
+	except:
+		print('Notificación de Telegram fallida, no hay conexión a internet.')
+	try:	
+		# SMTP Server:
+		s = smtplib.SMTP(host='mail.todmephis.cf', port=26)#Configuración de email
+		s.starttls()
+		s.login('redes3@todmephis.cf', 'ZxBuOWYR8S#f')
 
-	# SMTP Server:
-	s = smtplib.SMTP(host='mail.todmephis.cf', port=26)#Configuración de email
-	s.starttls()
-	s.login('redes3@todmephis.cf', 'ZxBuOWYR8S#f')
+		for name, email in zip(names, emails):
+			msg = MIMEMultipart()       # msg mime
+			message = message_template.substitute(DEPARTMENT_NAME=name.title())
 
-	for name, email in zip(names, emails):
-		msg = MIMEMultipart()       # msg mime
-		message = message_template.substitute(DEPARTMENT_NAME=name.title())
+			#Vista previa:
+			print(message)
 
-		#Vista previa:
-		print(message)
+			# Parametros del mensaje:
+			msg['From']='redes3@todmephis.cf'
+			msg['To']=email
+			msg['Subject']=subject
 
-		# Parametros del mensaje:
-		msg['From']='redes3@todmephis.cf'
-		msg['To']=email
-		msg['Subject']=subject
+			# Cuerpo del mensaje
+			msg.attach(MIMEText(message, 'plain'))
+			#(mensaje,texto)
 
-		# Cuerpo del mensaje
-		msg.attach(MIMEText(message, 'plain'))
-		#(mensaje,texto)
+			# Enviar.
+			s.send_message(msg)
+			del msg
 
-		# Enviar.
-		s.send_message(msg)
-		del msg
-
-	# Cierra la conexión con el servidor SMTP
-	s.quit()
+		# Cierra la conexión con el servidor SMTP
+		s.quit()
+	except:
+		print('Notificación de correo electrónico fallida, no hay conexión a internet.')

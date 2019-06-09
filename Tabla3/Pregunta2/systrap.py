@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-
 import os
 import sys
 import subprocess
@@ -21,25 +20,13 @@ SMTP_PORT = '26'
 BOT_TOKEN = '551346453:AAHdw97BnU_cv-i4FUmvtYKDEvkHTkbMSno'
 TELEGRAM_ID = '8288143'
 
-try:
-
-	LOG_FILE = os.path.abspath('/var/log/syslog')
-	WATCH_FOR =  '.9.9.43.1' #config
-	WATCH_FOR2 = '.9.9.109' #cpu
-	WATCH_FOR3 = '.9.9.13.3.0.7' #temp change
-	WATCH_FOR4 = '.9.2.1.2.0' #shutdown
-except:
-
-	sys.stderr.write(
-		'Usage: %s [log file] [string to watch for]' % sys.argv[0])
-	sys.exit(1)
+LOG_FILE = os.path.abspath('/var/log/syslog')
+WATCH_FOR =  '.9.9.43.1' #config
+WATCH_FOR2 = '.9.9.109' #cpu
+WATCH_FOR3 = '.9.9.13.3.0.7' #temp change
+WATCH_FOR4 = '.9.2.1.2.0' #shutdown
 
 def action(lines,code):
-
-	if 'beep' in sys.argv:
-
-		subprocess.Popen(['paplay', '/usr/share/sounds/ubuntu/notifications/Mallet.ogg'])
-
 	if 'notify' in sys.argv:
 
 		subprocess.Popen(['notify-send', 'LogMonitor', 'Found!'])
@@ -48,8 +35,8 @@ def action(lines,code):
 	names, emails = get_contacts('mycontacts.txt') # contactos
 	message_template = read_template('message.txt')
 	write_template(lines,code)
-	send_mail(names,emails,message_template,lines,code)
-	print("Notificación enviada al administrador")    
+	send_mail(names,emails,message_template,lines,code,'Notificacion SNMP')
+	#print("Notificación enviada al administrador")    
 
 # basic Python implementation of Unix tail
 
@@ -109,56 +96,63 @@ def write_template(lines,code):
 	#if ''
 	outF.close()
 
-def send_mail(names,emails,message_template,lines,code):
-	bot = telegram.Bot(token='551346453:AAHdw97BnU_cv-i4FUmvtYKDEvkHTkbMSno')
-	#print("[DEBUG] {}".format(bot.get_me()))
-	if code == 0: 
-		notificacion_t = 'Notificación SNMP: Ha llegado una trap al Servidor: '+ str(lines)+ '.\n'+'Ha habido cambios en la configuración. \n'
-	elif code == 1:
-		notificacion_t = 'Notificación SNMP: Ha llegado una trap al Servidor: '+ str(lines)+ '.\n'+ 'El CPU ha rebasado el porcentaje de alerta de uso.\n'
-	elif code == 2:
-		notificacion_t = 'Notificación SNMP: Ha llegado una trap al Servidor: '+ str(lines)+ '.\n'+ 'Cambio de temperatura detectada con el sensor I/O Cont Inlet.\n'
-	elif code == 3:
-		notificacion_t = 'Notificación SNMP: Ha llegado una trap al Servidor: '+ str(lines)+ '.\n'+ 'Se ha apagado un router\n'
-	else: 
-		print("Unknown code")
+def send_mail(names,emails,message_template,lines,code,subject):
+	try:
+		bot = telegram.Bot(token='551346453:AAHdw97BnU_cv-i4FUmvtYKDEvkHTkbMSno')
+		#print("[DEBUG] {}".format(bot.get_me()))
+		if code == 0: 
+			notificacion_t = 'Notificación SNMP: Ha llegado una trap al Servidor: '+ str(lines)+ '.\n'+'Ha habido cambios en la configuración. \n'
+		elif code == 1:
+			notificacion_t = 'Notificación SNMP: Ha llegado una trap al Servidor: '+ str(lines)+ '.\n'+ 'El CPU ha rebasado el porcentaje de alerta de uso.\n'
+		elif code == 2:
+			notificacion_t = 'Notificación SNMP: Ha llegado una trap al Servidor: '+ str(lines)+ '.\n'+ 'Cambio de temperatura detectada con el sensor I/O Cont Inlet.\n'
+		elif code == 3:
+			notificacion_t = 'Notificación SNMP: Ha llegado una trap al Servidor: '+ str(lines)+ '.\n'+ 'Se ha apagado un router\n'
+		else: 
+			print("Unknown code")
 
-	bot.send_message(chat_id='8288143', text=notificacion_t) #Set chat_id
-# SMTP Server:
-	s = smtplib.SMTP(host='mail.todmephis.cf', port=26)#Configuración de email
-	s.starttls()
-	s.login('redes3@todmephis.cf', 'ZxBuOWYR8S#f')
+		bot.send_message(chat_id='8288143', text=notificacion_t) #Set chat_id
+		print('Notificación enviada por Telegram')
+	except:
+		print('Notificación de Telegram fallida, no hay conexión a internet.')
+	try:	
+		# SMTP Server:
+		s = smtplib.SMTP(host='mail.todmephis.cf', port=26)#Configuración de email
+		s.starttls()
+		s.login('redes3@todmephis.cf', 'ZxBuOWYR8S#f')
 
-	for name, email in zip(names, emails):
-		msg = MIMEMultipart()       # msg mime
-		message = message_template.substitute(DEPARTMENT_NAME=name.title())
+		for name, email in zip(names, emails):
+			msg = MIMEMultipart()       # msg mime
+			message = message_template.substitute(DEPARTMENT_NAME=name.title())
 
-		#Vista previa:
-		print(message)
+			#Vista previa:
+			print(message)
 
-		# Parametros del mensaje:
-		msg['From']='redes3@todmephis.cf'
-		msg['To']=email
-		msg['Subject']=subject
+			# Parametros del mensaje:
+			msg['From']='redes3@todmephis.cf'
+			msg['To']=email
+			msg['Subject']=subject
 
-		# Cuerpo del mensaje
-		msg.attach(MIMEText(message, 'plain'))
-		#(mensaje,texto)
+			# Cuerpo del mensaje
+			msg.attach(MIMEText(message, 'plain'))
+			#(mensaje,texto)
 
-		# Enviar.
-		s.send_message(msg)
-		del msg
+			# Enviar.
+			s.send_message(msg)
+			del msg
 
-	# Cierra la conexión con el servidor SMTP
-	s.quit()
-
+		# Cierra la conexión con el servidor SMTP
+		s.quit()
+		print('Notificación de correo electrónico enviada.')
+	except Exception as e: 
+		print(e)
+		print('Notificación de correo electrónco fallida, no hay conexión a internet.')
 #os.system("sudo snmptrapd -L s 127.0.0.1")
-os.system("sudo snmptrapd -L s 192.168.1.117")
-
 print(
 	'Watching of ' + LOG_FILE + ' for SNMP Traps started at ' + time.strftime('%Y-%m-%d %I:%M:%S %p'))
 
 mtime_last = 0
+os.system("sudo snmptrapd -L s 192.168.1.117")
 
 while True:
 	mtime_cur = os.path.getmtime(LOG_FILE)    
