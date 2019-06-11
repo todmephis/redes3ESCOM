@@ -1,1 +1,1 @@
-Se ha cambiado el estado de la interfaz Interface FastEthernet4/0 del router R17 a activo en May 24 01:43:15.Se ha cambiado el estado de la interfaz Interface FastEthernet4/0 del router R17 a activo en May 24 01:43:15.
+Uso del CPU elevándose a un 81 en R16.Uso del CPU elevándose a un 81 en R16.
